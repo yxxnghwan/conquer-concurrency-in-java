@@ -28,7 +28,7 @@ class RaceConditionTest {
     }
 
     @Test
-    @DisplayName("read-modify-write 경쟁조 테스트")
+    @DisplayName("read-modify-write 경쟁조건 테스트")
     void multiThreadIncrease() throws InterruptedException {
         final ExecutorService executorService = Executors.newFixedThreadPool(200);
         final CountDownLatch countDownLatch = new CountDownLatch(200);
