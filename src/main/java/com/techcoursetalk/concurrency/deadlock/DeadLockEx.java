@@ -1,29 +1,33 @@
 package com.techcoursetalk.concurrency.deadlock;
 
 public class DeadLockEx {
-    public static Integer a = 0;
-    public static Integer b = 0;
+    public static Cloth tShirt = new TShirt();
+    public static Cloth pants = new Pants();
 
-    public void addAAndGetSum() {
-        synchronized (a) {
-            a++;
+    public void wearTShirtThenWearPants() {
+        synchronized (tShirt) {
+            wearCloth(tShirt);
             try {
-                Thread.sleep(1);
+                Thread.sleep(100);
             } catch (InterruptedException ignored) {}
-            synchronized (b) {
-                System.out.println("a + b = " + (a + b));
+            synchronized (pants) {
+                wearCloth(pants);
             }
         }
     }
-    public void addBAndGetSum() {
-        synchronized (b) {
-            b++;
+    public void wearPantsThenWearTShirt() {
+        synchronized (pants) {
+            wearCloth(pants);
             try {
-                Thread.sleep(1);
+                Thread.sleep(100);
             } catch (InterruptedException ignored) {}
-            synchronized (a) {
-                System.out.println("a + b = " + (a + b));
+            synchronized (tShirt) {
+                wearCloth(tShirt);
             }
         }
+    }
+
+    private void wearCloth(final Cloth cloth) {
+        cloth.wear();
     }
 }
