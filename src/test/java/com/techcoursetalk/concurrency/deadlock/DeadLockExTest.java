@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 class DeadLockExTest {
     @Test
-    @DisplayName("addAAndGetSum과 addBAndGetSum을 연달아 여러 번 요청해서 데드락을 발생시킨다. ")
+    @DisplayName("한 명은 상의를 입고 한 명은 바지를 입고 서로 상대방 옷을 입으려 해서 데드락을 발생시킨다.")
     void deadlock() throws InterruptedException {
         final ExecutorService executorService = Executors.newFixedThreadPool(2);
         final CountDownLatch countDownLatch = new CountDownLatch(2);

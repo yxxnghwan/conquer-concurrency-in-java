@@ -3,7 +3,6 @@ package com.techcoursetalk.concurrency.deadlock;
 public class DeadLockEx {
     public static Cloth tShirt = new TShirt();
     public static Cloth pants = new Pants();
-
     public void wearTShirtThenWearPants() {
         synchronized (tShirt) {
             wearCloth(tShirt);
@@ -26,7 +25,6 @@ public class DeadLockEx {
             }
         }
     }
-
     private void wearCloth(final Cloth cloth) {
         cloth.wear();
     }
