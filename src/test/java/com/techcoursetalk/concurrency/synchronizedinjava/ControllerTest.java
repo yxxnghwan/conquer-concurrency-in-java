@@ -22,5 +22,4 @@ public class ControllerTest {
 
         return response.as(Integer.class);
     }
-
 }
