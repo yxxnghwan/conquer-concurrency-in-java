@@ -1,6 +1,5 @@
-package com.techcoursetalk.concurrency.synchronizedInJava;
+package com.techcoursetalk.concurrency.synchronizedinjava;
 
-import java.util.concurrent.atomic.AtomicInteger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

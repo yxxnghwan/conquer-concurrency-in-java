@@ -1,4 +1,4 @@
-package com.techcoursetalk.concurrency.synchronizedInJava;
+package com.techcoursetalk.concurrency.synchronizedinjava;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import org.springframework.http.ResponseEntity;
@@ -8,20 +8,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/no-synchronized")
-public class NoSynchronizeController {
+@RequestMapping("/atomic")
+public class AtomicController {
 
-    private Integer soDangerousCount = 0;
+    private AtomicInteger atomicCount = new AtomicInteger(0);
+
 
     @PostMapping("/increase")
-    public ResponseEntity<Void> increaseNoSynchronizedCount() {
-        soDangerousCount++;
+    public ResponseEntity<Void> increaseAtomicCount() {
+        atomicCount.addAndGet(1);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/count")
-    public ResponseEntity<Integer> getCount() {
-        return ResponseEntity.ok(soDangerousCount);
+    public ResponseEntity<AtomicInteger> getAtomicCount() {
+        return ResponseEntity.ok(atomicCount);
     }
-
 }

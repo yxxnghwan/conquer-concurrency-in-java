@@ -1,4 +1,4 @@
-package com.techcoursetalk.concurrency.synchronizedInJava;
+package com.techcoursetalk.concurrency.synchronizedinjava;
 
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;

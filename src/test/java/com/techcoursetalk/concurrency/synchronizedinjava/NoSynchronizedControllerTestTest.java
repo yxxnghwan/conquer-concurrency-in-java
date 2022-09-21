@@ -1,4 +1,4 @@
-package com.techcoursetalk.concurrency.synchronizedInJava;
+package com.techcoursetalk.concurrency.synchronizedinjava;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

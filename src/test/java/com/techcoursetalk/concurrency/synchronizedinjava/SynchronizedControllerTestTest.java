@@ -1,4 +1,4 @@
-package com.techcoursetalk.concurrency.synchronizedInJava;
+package com.techcoursetalk.concurrency.synchronizedinjava;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -13,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class AtomicControllerTestTest extends ControllerTest {
+class SynchronizedControllerTestTest extends ControllerTest {
 
     @LocalServerPort
     private int port;
@@ -24,19 +24,19 @@ class AtomicControllerTestTest extends ControllerTest {
     }
 
     @Test
-    @DisplayName("Atomic 변수 적용")
-    void increaseAtomicCount() throws InterruptedException {
+    @DisplayName("Synchronized 적용")
+    void increaseSynchronizedCount() throws InterruptedException {
         final ExecutorService executorService = Executors.newFixedThreadPool(200);
         final CountDownLatch countDownLatch = new CountDownLatch(200);
         for (int i = 0; i < 200; i++) {
             executorService.submit(() -> {
-                카운트_증가_요청("/atomic/increase");
+                카운트_증가_요청("/synchronized/increase");
                 countDownLatch.countDown();
             });
         }
 
         countDownLatch.await();
-        final Integer count = 카운트_확인_요청("/atomic/count");
+        final Integer count = 카운트_확인_요청("/synchronized/count");
 
         System.out.println("count = " + count);
         assertThat(count).isEqualTo(200);
