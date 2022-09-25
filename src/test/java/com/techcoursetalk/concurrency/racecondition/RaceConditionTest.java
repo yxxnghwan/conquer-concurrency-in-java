@@ -28,44 +28,44 @@ class RaceConditionTest {
     }
 
     @Test
-    @DisplayName("read-modify-write 경쟁조건 테스트")
+    @DisplayName("read-modify-write 경쟁조건 테스트: 수강생이 30명이 됐는데 수강생 기준 미달이 돼서 강의가 폐강됐다.")
     void multiThreadIncrease() throws InterruptedException {
-        final ExecutorService executorService = Executors.newFixedThreadPool(200);
-        final CountDownLatch countDownLatch = new CountDownLatch(200);
-        for (int i = 0; i < 200; i++) {
+        final ExecutorService executorService = Executors.newFixedThreadPool(30);
+        final CountDownLatch countDownLatch = new CountDownLatch(30);
+        for (int i = 0; i < 30; i++) {
             executorService.submit(() -> {
-                카운트_증가_요청();
+                수강_신청();
                 countDownLatch.countDown();
             });
         }
 
         countDownLatch.await();
-        final Integer count = 카운트_확인_요청();
+        final Integer count = 수강생_수_확인();
 
         System.out.println("count = " + count);
-        assertThat(count).isNotEqualTo(200);
+        assertThat(count).isNotEqualTo(30);
     }
 
     @Test
     @DisplayName("check-then-act 경쟁조건 테스트")
-    void printOdd() throws InterruptedException {
+    void printWarning() throws InterruptedException {
         final ExecutorService executorService = Executors.newFixedThreadPool(100);
         for (int i = 0; i < 100; i++) {
             executorService.submit(() -> {
-                홀수만_출력();
+                수강신청_후_폐강위험시_출력();
             });
         }
 
         Thread.sleep(1500);
     }
 
-    private void 홀수만_출력() {
+    private void 수강신청_후_폐강위험시_출력() {
         RestAssured.given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when().post("/race-condition/2/check-then-act");
     }
 
-    private Integer 카운트_확인_요청() {
+    private Integer 수강생_수_확인() {
         final ExtractableResponse<Response> response = RestAssured.given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when().get("/race-condition/1/count")
@@ -75,7 +75,7 @@ class RaceConditionTest {
         return response.as(Integer.class);
     }
 
-    private void 카운트_증가_요청() {
+    private void 수강_신청() {
         RestAssured.given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when().post("/race-condition/1/increase");

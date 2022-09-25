@@ -26,19 +26,19 @@ class AtomicControllerTestTest extends ControllerTest {
     @Test
     @DisplayName("Atomic 변수 적용")
     void increaseAtomicCount() throws InterruptedException {
-        final ExecutorService executorService = Executors.newFixedThreadPool(200);
-        final CountDownLatch countDownLatch = new CountDownLatch(200);
-        for (int i = 0; i < 200; i++) {
+        final ExecutorService executorService = Executors.newFixedThreadPool(30);
+        final CountDownLatch countDownLatch = new CountDownLatch(30);
+        for (int i = 0; i < 30; i++) {
             executorService.submit(() -> {
-                카운트_증가_요청("/atomic/increase");
+                수강_신청("/atomic/increase");
                 countDownLatch.countDown();
             });
         }
 
         countDownLatch.await();
-        final Integer count = 카운트_확인_요청("/atomic/count");
+        final Integer count = 수강생_수_확인("/atomic/count");
 
         System.out.println("count = " + count);
-        assertThat(count).isEqualTo(200);
+        assertThat(count).isEqualTo(30);
     }
 }

@@ -14,8 +14,14 @@ class DeadLockExTest {
         final ExecutorService executorService = Executors.newFixedThreadPool(2);
         final CountDownLatch countDownLatch = new CountDownLatch(2);
         final DeadLockEx deadLockEx = new DeadLockEx();
-        executorService.submit(deadLockEx::wearTShirtThenWearPants);
-        executorService.submit(deadLockEx::wearPantsThenWearTShirt);
+        executorService.submit(() -> {
+            deadLockEx.wearTShirtThenWearPants();
+            countDownLatch.countDown();
+        });
+        executorService.submit(() -> {
+            deadLockEx.wearPantsThenWearTShirt();
+            countDownLatch.countDown();
+        });
 
         countDownLatch.await(10000, TimeUnit.MILLISECONDS);
 

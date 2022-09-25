@@ -1,7 +1,6 @@
 package com.techcoursetalk.concurrency.synchronizedinjava;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import io.restassured.RestAssured;
 import java.util.concurrent.CountDownLatch;
@@ -32,7 +31,7 @@ class AtomicInfiniteLoopControllerTest extends ControllerTest {
         final CountDownLatch countDownLatch = new CountDownLatch(200);
         for (int i = 0; i < 200; i++) {
             executorService.submit(() -> {
-                카운트_증가_요청("/atomic/crush/increase");
+                수강_신청("/atomic/crush/increase");
                 countDownLatch.countDown();
             });
         }

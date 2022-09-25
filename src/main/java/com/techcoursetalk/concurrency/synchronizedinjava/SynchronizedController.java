@@ -10,17 +10,25 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/synchronized")
 public class SynchronizedController {
 
-    private Integer synchronizedCount = 0;
+    private Integer studentCount = 0;
 
     @PostMapping("/increase")
     public synchronized ResponseEntity<Void> increaseSynchronizedCount() {
-        synchronizedCount++;
+        studentCount++;
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/count")
-    public synchronized ResponseEntity<Integer> getSynchronizedCount() {
-        return ResponseEntity.ok(synchronizedCount);
+    public synchronized ResponseEntity<Integer> getStudentCount() {
+        return ResponseEntity.ok(studentCount);
     }
 
+    @PostMapping("/2/check-then-act")
+    public synchronized ResponseEntity<Void> printWarning() throws InterruptedException {
+        studentCount++;
+        if (studentCount < 30) {
+            System.out.println("폐강위험! studentCount = " + studentCount);
+        }
+        return ResponseEntity.ok().build();
+    }
 }

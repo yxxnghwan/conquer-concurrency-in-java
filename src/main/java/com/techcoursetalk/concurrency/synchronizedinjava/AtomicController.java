@@ -11,17 +11,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/atomic")
 public class AtomicController {
 
-    private AtomicInteger atomicCount = new AtomicInteger(0);
+    private AtomicInteger studentCount = new AtomicInteger(0);
 
 
     @PostMapping("/increase")
     public ResponseEntity<Void> increaseAtomicCount() {
-        atomicCount.addAndGet(1);
+        studentCount.addAndGet(1);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/count")
-    public ResponseEntity<AtomicInteger> getAtomicCount() {
-        return ResponseEntity.ok(atomicCount);
+    public ResponseEntity<AtomicInteger> getStudentCount() {
+        return ResponseEntity.ok(studentCount);
     }
 }

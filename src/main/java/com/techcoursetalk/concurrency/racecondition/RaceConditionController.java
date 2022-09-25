@@ -10,25 +10,25 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/race-condition")
 public class RaceConditionController {
 
-    public static Integer soDangerousCount = 0;
+    public static Integer studentCount = 0;
 
     @PostMapping("/1/increase")
     public ResponseEntity<Void> increaseCount() {
-        soDangerousCount++;
+        studentCount++;
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/1/count")
     public ResponseEntity<Integer> getCount() {
-        return ResponseEntity.ok(soDangerousCount);
+        return ResponseEntity.ok(studentCount);
     }
 
     @PostMapping("/2/check-then-act")
-    public ResponseEntity<Void> printOdd() throws InterruptedException {
-        soDangerousCount++;
-        if (soDangerousCount % 2 == 1) {
+    public ResponseEntity<Void> printWarning() throws InterruptedException {
+        studentCount++;
+        if (studentCount < 30) {
             Thread.sleep(1);
-            System.out.println("soDangerousCount = " + soDangerousCount);
+            System.out.println("폐강위험! studentCount = " + studentCount);
         }
         return ResponseEntity.ok().build();
     }

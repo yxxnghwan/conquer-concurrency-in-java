@@ -11,6 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.MediaType;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class SynchronizedControllerTestTest extends ControllerTest {
@@ -24,21 +25,23 @@ class SynchronizedControllerTestTest extends ControllerTest {
     }
 
     @Test
-    @DisplayName("Synchronized 적용")
+    @DisplayName("수강신청생 200명이 고스란히 반영된다.")
     void increaseSynchronizedCount() throws InterruptedException {
         final ExecutorService executorService = Executors.newFixedThreadPool(200);
         final CountDownLatch countDownLatch = new CountDownLatch(200);
         for (int i = 0; i < 200; i++) {
             executorService.submit(() -> {
-                카운트_증가_요청("/synchronized/increase");
+                수강신청_후_폐강위험시_출력();
                 countDownLatch.countDown();
             });
         }
 
         countDownLatch.await();
-        final Integer count = 카운트_확인_요청("/synchronized/count");
+    }
 
-        System.out.println("count = " + count);
-        assertThat(count).isEqualTo(200);
+    private void 수강신청_후_폐강위험시_출력() {
+        RestAssured.given()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .when().post("/synchronized/2/check-then-act");
     }
 }

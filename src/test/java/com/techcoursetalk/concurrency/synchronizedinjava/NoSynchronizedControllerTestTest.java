@@ -30,13 +30,13 @@ class NoSynchronizedControllerTestTest extends ControllerTest {
         final CountDownLatch countDownLatch = new CountDownLatch(200);
         for (int i = 0; i < 200; i++) {
             executorService.submit(() -> {
-                카운트_증가_요청("/no-synchronized/increase");
+                수강_신청("/no-synchronized/increase");
                 countDownLatch.countDown();
             });
         }
 
         countDownLatch.await();
-        final Integer count = 카운트_확인_요청("/no-synchronized/count");
+        final Integer count = 수강생_수_확인("/no-synchronized/count");
 
         System.out.println("count = " + count);
         assertThat(count).isNotEqualTo(200);
